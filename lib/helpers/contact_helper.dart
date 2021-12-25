@@ -65,14 +65,14 @@ class ContactHelper {
   }
 
   Future<int> updateContact(Contact contact) async {
-    var bdContact = await db;
-    return await bdContact.update(contactTable, contact.toMap(),
+    Database dbContact = await db;
+    return await dbContact.update(contactTable, contact.toMap(),
         where: '$idColumn= ?', whereArgs: [contact.id]);
   }
 
   Future<List<Contact>> getAllContacts() async {
-    Database bdContact = await db;
-    List listMap = await bdContact.rawQuery(' SELECT * FROM $contactTable');
+    Database dbContact = await db;
+    List listMap = await dbContact.rawQuery(' SELECT * FROM $contactTable');
     List<Contact> listContacts = [];
     for (Map m in listMap) {
       listContacts.add(Contact.fromMap(m));
@@ -81,9 +81,14 @@ class ContactHelper {
   }
 
   Future<int> getNumber() async {
-    Database bdContact = await db;
+    Database dbContact = await db;
     return Sqflite.firstIntValue(
-        await bdContact.rawQuery('SELECT COUNT(*) FROM $contactTable'))!;
+        await dbContact.rawQuery('SELECT COUNT(*) FROM $contactTable'))!;
+  }
+
+  Future close() async {
+    Database dbContact = await db;
+    dbContact.close();
   }
 }
 

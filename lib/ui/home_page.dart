@@ -20,6 +20,13 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    Contact r = Contact();
+    r.name = 'Ravel';
+    r.email = 'ravelsoares64@gmail.com';
+    r.phone = '(84) 9 9939-1233';
+    r.img = 'assets/person.png';
+    r.id = 2;
+    helper.saveContact(r);
 
     helper.getAllContacts().then((list) {
       setState(() {
@@ -30,14 +37,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    Contact r = Contact();
-    r.name = 'Ravel';
-    r.email = 'ravelsoares64@gmail.com';
-    r.phone = '(84) 9 9939-1233';
-    r.img = 'assets/person.png';
-    r.id = 2;
-    helper.saveContact(r);
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Contatos'),
