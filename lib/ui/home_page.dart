@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:url_launcher/url_launcher.dart';
@@ -6,7 +5,7 @@ import 'package:agenda_de_contatos/helpers/contact_helper.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({Key key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -16,17 +15,16 @@ class _HomePageState extends State<HomePage> {
   ContactHelper helper = ContactHelper();
 
   List<Contact> contacts = [];
-
   @override
   void initState() {
     super.initState();
-    Contact r = Contact();
-    r.name = 'Ravel';
-    r.email = 'ravelsoares64@gmail.com';
-    r.phone = '(84) 9 9939-1233';
-    r.img = 'assets/person.png';
-    r.id = 2;
-    helper.saveContact(r);
+    Contact c = Contact();
+    c.name = 'Ravel';
+    c.email = 'teste@gmail.com';
+    c.phone = '22222222';
+    c.img = 'imgteste';
+
+    helper.saveContact(c);
 
     helper.getAllContacts().then((list) {
       setState(() {
@@ -71,7 +69,10 @@ class _HomePageState extends State<HomePage> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                      image: FileImage(File(contacts[index].img))),
+                    image: contacts[index].img != null
+                        ? FileImage(File(contacts[index].img))
+                        : AssetImage("images/person.png"),
+                  ),
                 ),
               ),
               Padding(
@@ -80,16 +81,16 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      contacts[index].img ?? '',
+                      contacts[index].name ?? '',
                       style: const TextStyle(
                           fontSize: 22, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      contacts[index].img ?? '',
+                      contacts[index].email ?? '',
                       style: const TextStyle(fontSize: 18),
                     ),
                     Text(
-                      contacts[index].img ?? '',
+                      contacts[index].phone ?? '',
                       style: const TextStyle(fontSize: 18),
                     ),
                   ],

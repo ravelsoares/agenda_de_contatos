@@ -17,13 +17,13 @@ class ContactHelper {
   //Construtor interno
   ContactHelper.internal();
 
-  Database? _db;
+  Database _db;
   Future<Database> get db async {
     if (_db != null) {
-      return _db!;
+      return _db;
     } else {
       _db = await initDb();
-      return _db!;
+      return _db;
     }
   }
 
@@ -45,7 +45,7 @@ class ContactHelper {
     return contact;
   }
 
-  Future<Contact?> getContact(int id) async {
+  Future<Contact> getContact(int id) async {
     Database dbContact = await db;
     List<Map> maps = await dbContact.query(contactTable,
         columns: [idColumn, nameColumn, emailColumn, phoneColumn, imgColumn],
@@ -70,7 +70,7 @@ class ContactHelper {
         where: '$idColumn= ?', whereArgs: [contact.id]);
   }
 
-  Future<List<Contact>> getAllContacts() async {
+  Future<List> getAllContacts() async {
     Database dbContact = await db;
     List listMap = await dbContact.rawQuery(' SELECT * FROM $contactTable');
     List<Contact> listContacts = [];
@@ -83,7 +83,7 @@ class ContactHelper {
   Future<int> getNumber() async {
     Database dbContact = await db;
     return Sqflite.firstIntValue(
-        await dbContact.rawQuery('SELECT COUNT(*) FROM $contactTable'))!;
+        await dbContact.rawQuery('SELECT COUNT(*) FROM $contactTable'));
   }
 
   Future close() async {
@@ -93,11 +93,11 @@ class ContactHelper {
 }
 
 class Contact {
-  late int id;
-  late String name;
-  late String email;
-  late String phone;
-  String img = 'assets/person.png';
+  int id;
+  String name;
+  String email;
+  String phone;
+  String img;
 
   Contact();
 
@@ -109,7 +109,7 @@ class Contact {
     img = map[imgColumn];
   }
 
-  Map<String, dynamic> toMap() {
+  Map toMap() {
     Map<String, dynamic> map = {
       nameColumn: name,
       emailColumn: email,
@@ -124,6 +124,6 @@ class Contact {
 
   @override
   String toString() {
-    return 'Contact(name: $name, email: $email, phone: $phone, img: $img)';
+    return 'Contact(id: $id, name: $name, email: $email, phone: $phone, img: $img)';
   }
 }
