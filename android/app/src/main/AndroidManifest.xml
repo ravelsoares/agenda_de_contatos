@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.agenda_de_contatos">
    <application
-        android:label="agenda_de_contatos"
+        android:label="Agenda de contatos"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
